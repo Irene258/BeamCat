@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeamCat 训练游戏 - 精准点击</title>
+    <title>BeamCat Training Game - Precision Click</title>
     <style>
         * {
             margin: 0;
@@ -15,6 +15,11 @@
             text-align: center;
             background: #121212;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
         .game-container {
             position: relative;
@@ -38,6 +43,9 @@
         .scoreboard {
             margin-top: 10px;
             font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .timer {
             font-size: 18px;
@@ -53,7 +61,7 @@
             padding: 10px 20px;
             font-size: 18px;
             cursor: pointer;
-            margin: 10px;
+            margin: 30px;
             background-color: #333;
             color: #fff;
             border: none;
@@ -66,19 +74,20 @@
 </head>
 <body>
 
-    <h1>BeamCat 训练游戏 - 精准点击</h1>
-    <p class="timer">剩余时间: <span id="time">30</span> 秒</p>
-    <p class="scoreboard">得分: <span id="score">0</span></p>
+    <h1>BeamCat Training Game - Precision Click</h1>
+    <p class="timer">Time Remaining: <span id="time">30</span> Second</p>
+    <p class="scoreboard">Score: <span id="score">0</span>
+        <button id="endBtn" style="display:none;">End Game</button>
+    </p>
 
     <div class="game-container" id="gameArea">
         <div class="target" id="target"></div>
     </div>
 
-    <p class="game-over" id="gameOver">游戏结束！</p>
+    <p class="game-over" id="gameOver">Game Over</p>
 
-    <!-- 开始和结束按钮 -->
-    <button id="startBtn">开始游戏</button>
-    <button id="endBtn" style="display:none;">结束游戏</button>
+    <!-- 开始按钮 -->
+    <button id="startBtn">Start Game</button>
 
     <script>
         let score = 0;
@@ -90,6 +99,10 @@
         const gameOverText = document.getElementById("gameOver");
         const startBtn = document.getElementById("startBtn");
         const endBtn = document.getElementById("endBtn");
+
+        // 定义颜色数组
+        const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple'];
+        let colorIndex = 0;
 
         // 目标随机出现
         function moveTarget() {
@@ -104,6 +117,10 @@
             score++;
             scoreDisplay.textContent = score;
             moveTarget();
+
+            // 改变目标颜色
+            colorIndex = (colorIndex + 1) % colors.length;
+            target.style.backgroundColor = colors[colorIndex];
         });
 
         // 倒计时逻辑
